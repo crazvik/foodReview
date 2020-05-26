@@ -10,14 +10,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/index").permitAll()
-            .and()
-                .authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/users/**").permitAll()
+                .antMatchers("/**").permitAll()
             .and()
                 .formLogin()
+                .usernameParameter("username")
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .permitAll();
+                .permitAll()
+            .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout");
     }
 }

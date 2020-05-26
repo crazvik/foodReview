@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <link rel="stylesheet" th:href="@{/styles/style.css}" href="styles/style.css">
     <meta charset="UTF-8">
@@ -9,11 +10,13 @@
 <nav>
     <ul id="linkList">
         <li><a href="index.html" th:href="@{index}">Index</a></li>
-        <a id="loginButton" th:href="@{login}" >Login</a>
+        <li sec:authorize="isAnonymous() || hasAuthority('ADMIN')">
+            <a th:href="@{/users/register/form}" href="register.html">Register</a></li>
     </ul>
+    <div sec:authorize="isAnonymous()">
+        <a id="loginButton" class="btn btn-success" th:href="@{/login}" value="Login">Login</a>
+    </div>
 </nav>
 <section class="main-window"><h1>Main page</h1></section>
-<section id="modal" hidden>
-</section>
 </body>
 </html>

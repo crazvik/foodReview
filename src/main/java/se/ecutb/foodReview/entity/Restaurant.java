@@ -8,11 +8,12 @@ import java.util.Objects;
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int restaurantId;
     private String name;
 
-    @ManyToMany(mappedBy = "restaurants")
-    private List<Reviewers> reviewers;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "reviewer_id")
+    private Reviewer reviewer;
 
     @OneToMany(mappedBy = "restaurant")
     private List<FoodItem> foodItems;
@@ -25,7 +26,7 @@ public class Restaurant {
     }
 
     public int getId() {
-        return id;
+        return restaurantId;
     }
 
     public String getName() {
@@ -36,12 +37,12 @@ public class Restaurant {
         this.name = name;
     }
 
-    public List<Reviewers> getReviewers() {
-        return reviewers;
+    public Reviewer getReviewer() {
+        return reviewer;
     }
 
-    public void setReviewers(List<Reviewers> reviewers) {
-        this.reviewers = reviewers;
+    public void setReviewer(Reviewer reviewer) {
+        this.reviewer = reviewer;
     }
 
     public List<FoodItem> getFoodItems() {
@@ -57,23 +58,23 @@ public class Restaurant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Restaurant that = (Restaurant) o;
-        return id == that.id &&
+        return restaurantId == that.restaurantId &&
                 Objects.equals(name, that.name) &&
-                Objects.equals(reviewers, that.reviewers) &&
+                Objects.equals(reviewer, that.reviewer) &&
                 Objects.equals(foodItems, that.foodItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, reviewers, foodItems);
+        return Objects.hash(restaurantId, name, reviewer, foodItems);
     }
 
     @Override
     public String toString() {
         return "Restaurant{" +
-                "id=" + id +
+                "restaurantId=" + restaurantId +
                 ", name='" + name + '\'' +
-                ", reviewers=" + reviewers +
+                ", reviewer=" + reviewer +
                 ", foodItems=" + foodItems +
                 '}';
     }

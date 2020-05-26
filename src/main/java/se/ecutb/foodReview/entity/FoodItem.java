@@ -8,7 +8,7 @@ import java.util.Objects;
 public class FoodItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int itemId;
     private String name;
     private String description;
     private String review;
@@ -16,9 +16,6 @@ public class FoodItem {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
-
-    @ManyToMany(mappedBy = "foodItems")
-    private List<Reviewers> reviewers;
 
     public FoodItem() {
     }
@@ -30,7 +27,7 @@ public class FoodItem {
     }
 
     public int getId() {
-        return id;
+        return itemId;
     }
 
     public String getName() {
@@ -65,41 +62,31 @@ public class FoodItem {
         this.restaurant = restaurant;
     }
 
-    public List<Reviewers> getReviewers() {
-        return reviewers;
-    }
-
-    public void setReviewers(List<Reviewers> reviewers) {
-        this.reviewers = reviewers;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FoodItem foodItem = (FoodItem) o;
-        return id == foodItem.id &&
+        return itemId == foodItem.itemId &&
                 Objects.equals(name, foodItem.name) &&
                 Objects.equals(description, foodItem.description) &&
                 Objects.equals(review, foodItem.review) &&
-                Objects.equals(restaurant, foodItem.restaurant) &&
-                Objects.equals(reviewers, foodItem.reviewers);
+                Objects.equals(restaurant, foodItem.restaurant);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, review, restaurant, reviewers);
+        return Objects.hash(itemId, name, description, review, restaurant);
     }
 
     @Override
     public String toString() {
         return "FoodItem{" +
-                "id=" + id +
+                "itemId=" + itemId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", review='" + review + '\'' +
                 ", restaurant=" + restaurant +
-                ", reviewers=" + reviewers +
                 '}';
     }
 }

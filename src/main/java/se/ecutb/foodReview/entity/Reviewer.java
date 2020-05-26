@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Reviewers {
+public class Reviewer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int reviewerId;
     private String firstName;
     private String lastName;
 
@@ -18,29 +18,24 @@ public class Reviewers {
     private String password;
     private LocalDate registrationDate;
 
+    @OneToMany(mappedBy = "reviewer")
+    private List<Restaurant> restaurants;
+
     @ManyToMany(
             cascade = {CascadeType.MERGE},
             fetch = FetchType.EAGER
     )
     @JoinTable(
-            name = "user_reviews",
-            joinColumns = @JoinColumn(name = "reviewer_Id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+            name = "reviewer_roles",
+            joinColumns = @JoinColumn(name = "reviewer_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Restaurant> restaurants;
+    private List<ReviewerRole> roles;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_reviews",
-            joinColumns = @JoinColumn(name = "reviewer_Id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "fooditem_Id", referencedColumnName = "id")
-    )
-    private List<FoodItem> foodItems;
-
-    public Reviewers() {
+    public Reviewer() {
     }
 
-    public Reviewers(String firstName, String lastName, String username, String password, LocalDate registrationDate) {
+    public Reviewer(String firstName, String lastName, String username, String password, LocalDate registrationDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -49,7 +44,7 @@ public class Reviewers {
     }
 
     public int getId() {
-        return id;
+        return reviewerId;
     }
 
     public String getFirstName() {
@@ -100,45 +95,45 @@ public class Reviewers {
         this.restaurants = restaurants;
     }
 
-    public List<FoodItem> getFoodItems() {
-        return foodItems;
+    public List<ReviewerRole> getRoles() {
+        return roles;
     }
 
-    public void setFoodItems(List<FoodItem> foodItems) {
-        this.foodItems = foodItems;
+    public void setRoles(List<ReviewerRole> roles) {
+        this.roles = roles;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Reviewers reviewers = (Reviewers) o;
-        return id == reviewers.id &&
-                Objects.equals(firstName, reviewers.firstName) &&
-                Objects.equals(lastName, reviewers.lastName) &&
-                Objects.equals(username, reviewers.username) &&
-                Objects.equals(password, reviewers.password) &&
-                Objects.equals(registrationDate, reviewers.registrationDate) &&
-                Objects.equals(restaurants, reviewers.restaurants) &&
-                Objects.equals(foodItems, reviewers.foodItems);
+        Reviewer reviewer = (Reviewer) o;
+        return reviewerId == reviewer.reviewerId &&
+                Objects.equals(firstName, reviewer.firstName) &&
+                Objects.equals(lastName, reviewer.lastName) &&
+                Objects.equals(username, reviewer.username) &&
+                Objects.equals(password, reviewer.password) &&
+                Objects.equals(registrationDate, reviewer.registrationDate) &&
+                Objects.equals(restaurants, reviewer.restaurants) &&
+                Objects.equals(roles, reviewer.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, username, password, registrationDate, restaurants, foodItems);
+        return Objects.hash(reviewerId, firstName, lastName, username, password, registrationDate, restaurants, roles);
     }
 
     @Override
     public String toString() {
-        return "Reviewers{" +
-                "id=" + id +
+        return "Reviewer{" +
+                "reviewerId=" + reviewerId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", registrationDate=" + registrationDate +
                 ", restaurants=" + restaurants +
-                ", foodItems=" + foodItems +
+                ", roles=" + roles +
                 '}';
     }
 }
