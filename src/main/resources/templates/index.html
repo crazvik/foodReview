@@ -16,6 +16,9 @@
         <li sec:authorize="hasAuthority('ADMIN')">
             <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a>
         </li>
+        <li sec:authorize="hasRole('USER')">
+            <a th:href="@{/users/restaurantReview/form}" href="restaurantReview.html">Review restaurants</a>
+        </li>
     </ul>
 
     <form th:action="@{/logout}" action="#" class="form-inline" method="post">

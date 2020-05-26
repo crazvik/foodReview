@@ -1,11 +1,12 @@
 package se.ecutb.foodReview.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Restaurant {
+public class Restaurant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int restaurantId;
