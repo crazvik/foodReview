@@ -8,9 +8,12 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import se.ecutb.foodReview.data.RestaurantRepo;
 import se.ecutb.foodReview.data.ReviewerRepo;
+import se.ecutb.foodReview.dto.CreateRestaurantForm;
 import se.ecutb.foodReview.dto.CreateReviewerForm;
 import se.ecutb.foodReview.entity.Reviewer;
+import se.ecutb.foodReview.service.RestaurantService;
 import se.ecutb.foodReview.service.ReviewerService;
 
 import javax.validation.Valid;
@@ -59,9 +62,15 @@ public class UserController {
         }
     }
 
+
+
     @GetMapping("/login")
     public String getLoginForm(){
         return "loginForm";
     }
 
+    @GetMapping("/restaurants")
+    public String getRestaurantPage() {
+        return "restaurants";
+    }
 }

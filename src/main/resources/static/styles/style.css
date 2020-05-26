@@ -119,3 +119,19 @@ button {
 #adminLink {
     color: black;
 }
+
+label {
+    position: relative;
+    bottom: -70px;
+}
+
+#register {
+    text-align: center;
+    position: relative;
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+
+#register>a {
+    color: black;
+}

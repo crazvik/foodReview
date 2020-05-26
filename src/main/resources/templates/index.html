@@ -10,8 +10,12 @@
 <nav>
     <ul id="linkList">
         <li><a href="index.html" th:href="@{index}">Index</a></li>
-        <li sec:authorize="isAnonymous() || hasAuthority('ADMIN')">
-            <a th:href="@{/users/register/form}" href="register.html">Register</a></li>
+        <li><a href="restaurants.html" th:href="@{/restaurants}">Restaurants</a></li>
+        <li sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/users/register/form}" href="register.html">Register user</a></li>
+        <li sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a>
+        </li>
     </ul>
 
     <form th:action="@{/logout}" action="#" class="form-inline" method="post">
@@ -19,24 +23,18 @@
             <button class="btn btn-outline-info" type="submit" value="Logout" id="logoutButton">Logout</button>
         </div>
         <div sec:authorize="isAnonymous()">
-            <a class="btn btn-success" th:href="@{/login}" value="Login" id="loginButton">Login</a>
+            <a class="btn btn-success" th:href="@{/login}" value="Login" id="loginButton">Login/Register</a>
         </div>
     </form>
-
-
 </nav>
     <section class="main-window"><h1>Main page</h1>
         <div sec:authorize="isAuthenticated()">
             <div sec:authorize="hasAuthority('ADMIN')">
-                <h2>Test </h2><span th:text="${#authentication.name}"></span></h2>
+                <h2>Test <span th:text="${#authentication.name}"></span></h2>
             </div>
             <div sec:authorize="!hasAuthority('ADMIN')">
-                <h2>Test </h2><span th:text="${#authentication.name}"></span></h2>
+                <h2>Test <span th:text="${#authentication.name}"></span></h2>
             </div>
-        </div>
-
-        <div th:if="${#authorization.expression('isAuthenticated()')}">
-            <a th:id="adminLink" th:href="@{/admin}" style="color: black">Admin page</a>
         </div>
     </section>
 </body>

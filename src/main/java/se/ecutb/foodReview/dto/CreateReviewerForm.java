@@ -4,27 +4,22 @@ import javax.validation.constraints.*;
 
 public class CreateReviewerForm {
 
-    @NotNull
-    @NotEmpty(message = "First name is mandatory")
+    @NotBlank(message = "First name is mandatory")
     @Size(min = 2, max = 255, message = "First name need to have 2 or more letters")
     private String firstName;
 
-    @NotNull
-    @NotEmpty(message = "Last name is mandatory")
+    @NotBlank(message = "Last name is mandatory")
     @Size(min = 2, max = 255, message = "Last name need to have 2 or more letters")
     private String lastName;
 
-    @NotNull
-    @NotEmpty(message = "Username is mandatory")
+    @NotBlank(message = "Username is mandatory")
     private String username;
 
-    @NotNull
-    @NotEmpty(message = "You need to define a password")
+    @NotBlank(message = "You need to define a password")
     @Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$", message = "Must contain at least one letter, one number, and be longer than six characters.")
     private String password;
 
-    @NotNull
-    @NotEmpty(message = "You need to confirm your password")
+    @NotBlank(message = "You need to confirm your password")
     @Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$", message = "Must contain at least one letter, one number, and be longer than six characters.")
     private String passwordConfirm;
 

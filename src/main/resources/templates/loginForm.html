@@ -14,7 +14,7 @@
             <a th:href="@{/users/register/form}" href="register.html">Register</a></li>
     </ul>
     <div sec:authorize="isAnonymous()">
-        <a id="loginButton" class="btn btn-success" th:href="@{/login}" value="Login">Login</a>
+        <a id="loginButton" class="btn btn-success" th:href="@{/login}" value="Login">Login/Register</a>
     </div>
 </nav>
 <section class="main-window">
@@ -24,6 +24,9 @@
         <input name="password" type="password" placeholder="Password">
         <button id="submit" class="btn btn-primary" type="submit">Login</button>
     </form>
+    <div id="register">
+        <a th:href="@{/users/register/form}" href="register.html">Not a user?</a>
+    </div>
 </section>
 </body>
 </html>
