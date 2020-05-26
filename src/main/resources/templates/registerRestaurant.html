@@ -9,7 +9,7 @@
 <body>
 <ul id="linkList">
     <li><a href="index.html" th:href="@{/index}">Index</a></li>
-    <li><a href="restaurants.html" th:href="@{restaurants}">Restaurants</a></li>
+    <li><a href="restaurants.html" th:href="@{/restaurants}">Restaurants</a></li>
     <li sec:authorize="hasAuthority('ADMIN')">
         <a th:href="@{/users/register/form}" href="register.html">Register user</a></li>
     <li sec:authorize="hasAuthority('ADMIN')">
@@ -26,7 +26,7 @@
 </form>
     <section class="main-window">
         <h1>Register</h1>
-        <form th:action="@{/admin/registerRestaurant/process}" th:object="${form}" method="post">
+        <form th:action="@{/users/registerRestaurant/process}" th:object="${form}" method="post">
             <label for="restaurantName"></label>
             <input class="form-control" type="text" id="restaurantName" th:field="*{restaurantName}" placeholder="Restaurant name"/>
             <div th:if="${#fields.hasErrors('restaurantName')}">

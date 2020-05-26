@@ -26,5 +26,6 @@ public class Seeder implements CommandLineRunner {
         roleRepo.save(new ReviewerRole("ADMIN"));
 
         reviewerService.registerReviewer("Admin", "Adminson", "Admin", "admin", LocalDate.now(), true);
+        reviewerService.registerReviewer("User", "Userson", "User", "user", LocalDate.now(), false);
     }
 }

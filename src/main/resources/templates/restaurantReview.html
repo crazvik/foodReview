@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <link rel="stylesheet" th:href="@{/styles/style.css}" href="styles/style.css">
+        <meta charset="UTF-8">
+        <title>Main Page</title>
+    </head>
+    <body>
+        <nav>
+            <ul id="linkList">
+                <li><a href="index.html" th:href="@{index}">Index</a></li>
+                <li><a href="restaurants.html" th:href="@{/restaurants}">Restaurants</a></li>
+                <li sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/users/register/form}" href="register.html">Register user</a></li>
+                <li sec:authorize="hasAuthority('USER')">
+                    <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a>
+                </li>
+                <li sec:authorize="hasAuthority('USER')">
+                    <a th:href="@{/users/restaurantReview/form}" href="restaurantReview.html">Review restaurants</a></li>
+            </ul>
 
-</body>
+            <form th:action="@{/logout}" action="#" class="form-inline" method="post">
+                <div sec:authorize="isAuthenticated()">
+                    <button class="btn btn-outline-info" type="submit" value="Logout" id="logoutButton">Logout</button>
+                </div>
+                <div sec:authorize="isAnonymous()">
+                    <a class="btn btn-success" th:href="@{/login}" value="Login" id="loginButton">Login/Register</a>
+                </div>
+            </form>
+        </nav>
+        <section class="main-window"><h1>Review page</h1>
+
+        </section>
+    </body>
 </html>

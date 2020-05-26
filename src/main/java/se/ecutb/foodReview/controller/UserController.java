@@ -68,13 +68,13 @@ public class UserController {
         }
     }
 
-    @GetMapping("admin/registerRestaurant/form")
+    @GetMapping("users/registerRestaurant/form")
     public String getRestaurantForm(Model model){
         model.addAttribute("form", new CreateRestaurantForm());
         return "registerRestaurant";
     }
 
-    @PostMapping("admin/registerRestaurant/process")
+    @PostMapping("users/registerRestaurant/process")
     public String formProcess(@Valid @ModelAttribute("form") CreateRestaurantForm form, BindingResult bindingResult) {
         if (restaurantRepo.findByNameIgnoreCase(form.getRestaurantName()).isPresent()) {
             FieldError error = new FieldError("form", "name", "Name is already in use");
@@ -85,8 +85,8 @@ public class UserController {
             return "registerRestaurant";
         }
 
-        Restaurant restaurant = restaurantService.registerRestaurant(form.getRestaurantName());
-        return "redirect:/restaurants";
+        restaurantService.registerRestaurant(form.getRestaurantName());
+        return "redirect:/users/registerRestaurant/form";
     }
 
     @GetMapping("/login")
@@ -98,5 +98,10 @@ public class UserController {
     public String getRestaurantPage(Model model) {
         model.addAttribute("restaurants", restaurantRepo.findAll());
         return "restaurants";
+    }
+
+    @GetMapping("/users/restaurantReview/form")
+    public String getRestaurantReviewPage() {
+        return "restaurantReview";
     }
 }

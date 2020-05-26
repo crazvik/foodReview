@@ -13,12 +13,11 @@
         <li><a href="restaurants.html" th:href="@{/restaurants}">Restaurants</a></li>
         <li sec:authorize="hasAuthority('ADMIN')">
             <a th:href="@{/users/register/form}" href="register.html">Register user</a></li>
-        <li sec:authorize="hasAuthority('ADMIN')">
-            <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a>
+        <li sec:authorize="hasAuthority('USER')">
+            <a th:href="@{/users/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a>
         </li>
-        <li sec:authorize="hasRole('USER')">
-            <a th:href="@{/users/restaurantReview/form}" href="restaurantReview.html">Review restaurants</a>
-        </li>
+        <li sec:authorize="hasAuthority('USER')">
+            <a th:href="@{/users/restaurantReview/form}" href="restaurantReview.html">Review restaurants</a></li>
     </ul>
 
     <form th:action="@{/logout}" action="#" class="form-inline" method="post">
