@@ -51,13 +51,30 @@ nav {
     border: none;
     color: white;
     padding: 10px;
+    text-decoration: none;
 }
 
 #loginButton:hover {
     background-color: #070e12;
 }
 
-a {
+#logoutButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    background: none;
+    border: none;
+    color: white;
+    padding: 10px;
+}
+
+#logoutButton:hover {
+    background-color: #070e12;
+}
+
+li>a {
     display: block;
     font-size: 20px;
     text-align: center;
@@ -91,4 +108,14 @@ button {
     margin: 75px 5% 5%;
 }
 
+.form-error {
+    text-align: left;
+    display: flex;
+    color: red;
+    font-size: small;
+    font-style: italic;
+}
 
+#adminLink {
+    color: black;
+}

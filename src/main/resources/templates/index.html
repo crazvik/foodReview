@@ -13,10 +13,31 @@
         <li sec:authorize="isAnonymous() || hasAuthority('ADMIN')">
             <a th:href="@{/users/register/form}" href="register.html">Register</a></li>
     </ul>
-    <div sec:authorize="isAnonymous()">
-        <a id="loginButton" class="btn btn-success" th:href="@{/login}" value="Login">Login</a>
-    </div>
+
+    <form th:action="@{/logout}" action="#" class="form-inline" method="post">
+        <div sec:authorize="isAuthenticated()">
+            <button class="btn btn-outline-info" type="submit" value="Logout" id="logoutButton">Logout</button>
+        </div>
+        <div sec:authorize="isAnonymous()">
+            <a class="btn btn-success" th:href="@{/login}" value="Login" id="loginButton">Login</a>
+        </div>
+    </form>
+
+
 </nav>
-<section class="main-window"><h1>Main page</h1></section>
+    <section class="main-window"><h1>Main page</h1>
+        <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="hasAuthority('ADMIN')">
+                <h2>Test </h2><span th:text="${#authentication.name}"></span></h2>
+            </div>
+            <div sec:authorize="!hasAuthority('ADMIN')">
+                <h2>Test </h2><span th:text="${#authentication.name}"></span></h2>
+            </div>
+        </div>
+
+        <div th:if="${#authorization.expression('isAuthenticated()')}">
+            <a th:id="adminLink" th:href="@{/admin}" style="color: black">Admin page</a>
+        </div>
+    </section>
 </body>
 </html>
