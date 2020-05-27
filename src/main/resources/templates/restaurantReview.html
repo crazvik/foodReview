@@ -33,11 +33,14 @@
         <section class="main-window">
             <h1>Review page</h1>
             <form th:action="@{/users/restaurantReview/process}" th:object="${form}" method="post">
+                <label for="foodItems"></label>
+                <input class="form-control" type="text" id="foodItems" th:field="*{foodItemName}" placeholder="Food item name"/>
+                <label for="review"></label>
                 <textarea class="form-control" id="review" th:field="*{review}" placeholder="Review" cols="75"></textarea>
-
+                <label for="stars"></label>
+                <input class="form-control" type="number" id="stars" th:field="*{stars}" placeholder="Stars"/>
                 <button id="submit" class="btn btn-primary" type="submit">Register</button>
             </form>
-
         </section>
     </body>
 </html>

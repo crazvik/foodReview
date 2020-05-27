@@ -48,7 +48,7 @@
                     </li>
                 </ul>
             </div>
-            <input class="form-control" type="text" id="restaurantId" th:field="*{restaurantId}" placeholder="Restaurant id"/>
+            <input class="form-control" type="number" id="restaurantId" th:field="*{restaurantId}" placeholder="Restaurant id"/>
             <div th:if="${#fields.hasErrors('restaurantId')}">
                 <ul class="p-0">
                     <li th:each="error : ${#fields.errors('restaurantId')}">

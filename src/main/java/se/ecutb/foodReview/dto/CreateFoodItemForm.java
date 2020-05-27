@@ -12,6 +12,8 @@ public class CreateFoodItemForm {
     @Size(min = 2, max = 255, message = "Description need to have 2 or more letters")
     private String desc;
 
+
+
     private int restaurantId;
 
     public String getFoodItemName() {
@@ -37,4 +39,5 @@ public class CreateFoodItemForm {
     public void setRestaurantId(int restaurantId) {
         this.restaurantId = restaurantId;
     }
+
 }
