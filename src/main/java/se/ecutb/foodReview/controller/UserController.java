@@ -50,7 +50,6 @@ public class UserController {
 
     @PostMapping("users/register/process")
     public String formProcess(@Valid @ModelAttribute("form") CreateReviewerForm form, BindingResult bindingResult){
-
         if(reviewerRepo.findByUsernameIgnoreCase(form.getUsername()).isPresent()) {
             FieldError error = new FieldError("form", "username", "Username is already in use");
             bindingResult.addError(error);
@@ -106,10 +105,9 @@ public class UserController {
             result.addError(error);
         }
 
-        if(result.hasErrors()){
+        if(result.hasErrors()) {
             return "updateReviewer";
         }
-
 
         original.setUsername(form.getUsername());
         original.setFirstName(form.getFirstName());
@@ -128,15 +126,6 @@ public class UserController {
 
     @PostMapping("admin/registerRestaurant/process")
     public String formProcess(@Valid @ModelAttribute("form") CreateRestaurantForm form, BindingResult bindingResult) {
-        if (restaurantRepo.findByNameIgnoreCase(form.getRestaurantName()).isPresent()) {
-            FieldError error = new FieldError("form", "name", "Name is already in use");
-            bindingResult.addError(error);
-        }
-
-        if (bindingResult.hasErrors()) {
-            return "registerRestaurant";
-        }
-
         restaurantService.registerRestaurant(form.getRestaurantName());
         return "redirect:/admin/registerRestaurant/form";
     }

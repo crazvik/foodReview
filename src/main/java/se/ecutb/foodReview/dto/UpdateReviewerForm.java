@@ -20,14 +20,6 @@ public class UpdateReviewerForm {
     @NotBlank(message = "Username is mandatory")
     private String username;
 
-    @NotBlank(message = "You need to define a password")
-    @Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$", message = "Must contain at least one letter, one number, and be longer than six characters.")
-    private String password;
-
-    @NotBlank(message = "You need to confirm your password")
-    @Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$", message = "Must contain at least one letter, one number, and be longer than six characters.")
-    private String passwordConfirm;
-
     private boolean admin;
 
     public int getId() {
@@ -60,22 +52,6 @@ public class UpdateReviewerForm {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
     }
 
     public boolean isAdmin() {

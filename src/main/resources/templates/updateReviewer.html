@@ -58,24 +58,6 @@
                 </li>
             </ul>
         </div>
-        <label for="password"></label>
-        <input class="form-control" type="password" id="password" th:field="*{password}" placeholder="Password"/>
-        <div th:if="${#fields.hasErrors('password')}">
-            <ul class="p-0">
-                <li th:each="error : ${#fields.errors('password')}">
-                    <span class="form-error" th:text="${error}"></span>
-                </li>
-            </ul>
-        </div>
-        <label for="confirm"></label>
-        <input class="form-control" type="password" id="confirm" th:field="*{passwordConfirm}" placeholder="Confirm password">
-        <div th:if="${#fields.hasErrors('passwordConfirm')}">
-            <ul class="p-0">
-                <li th:each="error : ${#fields.errors('passwordConfirm')}">
-                    <span class="form-error" th:text="${error}"></span>
-                </li>
-            </ul>
-        </div>
 
         <div sec:authorize="hasAuthority('ADMIN')">
             <label>Create admin</label>
