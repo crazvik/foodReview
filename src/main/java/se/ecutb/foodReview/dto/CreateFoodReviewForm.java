@@ -12,9 +12,7 @@ public class CreateFoodReviewForm {
     private String review;
 
 
-    @Size(min = 1, max = 5, message = "Need a rating between 1-5")
-    @NotBlank
-    private int stars;
+    private String stars;
 
     public String getFoodItemName() {
         return foodItemName;
@@ -32,11 +30,11 @@ public class CreateFoodReviewForm {
         this.review = review;
     }
 
-    public int getStars() {
+    public String getStars() {
         return stars;
     }
 
-    public void setStars(int stars) {
+    public void setStars(String stars) {
         this.stars = stars;
     }
 }

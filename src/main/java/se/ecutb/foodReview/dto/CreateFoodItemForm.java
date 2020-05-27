@@ -12,9 +12,7 @@ public class CreateFoodItemForm {
     @Size(min = 2, max = 255, message = "Description need to have 2 or more letters")
     private String desc;
 
-
-
-    private int restaurantId;
+    private String restaurantName;
 
     public String getFoodItemName() {
         return foodItemName;
@@ -32,12 +30,11 @@ public class CreateFoodItemForm {
         this.desc = desc;
     }
 
-    public int getRestaurantId() {
-        return restaurantId;
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public void setRestaurantId(int restaurantId) {
-        this.restaurantId = restaurantId;
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
-
 }

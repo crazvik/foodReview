@@ -20,7 +20,7 @@ public class FoodItemServiceImpl implements FoodItemService {
 
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
-    public FoodItem register(String name, String desc, String review, int stars, int restaurantId) {
+    public FoodItem register(String name, String desc, String review, String stars, int restaurantId) {
         FoodItem newFoodItem = new FoodItem(name, desc, review, stars, restaurantRepo.findById(restaurantId).get());
         return foodItemRepo.save(newFoodItem);
     }

@@ -48,15 +48,17 @@
                     </li>
                 </ul>
             </div>
-            <input class="form-control" type="number" id="restaurantId" th:field="*{restaurantId}" placeholder="Restaurant id"/>
-            <div th:if="${#fields.hasErrors('restaurantId')}">
+            <select class="form-control" id="restaurantName" th:field="*{restaurantName}"/>
+                <option th:each="name: ${resName}" th:text="${name.name}">Select restaurant</option>
+            </select>
+            <div th:if="${#fields.hasErrors('restaurantName')}">
                 <ul class="p-0">
-                    <li th:each="error : ${#fields.errors('restaurantId')}">
+                    <li th:each="error : ${#fields.errors('restaurantName')}">
                         <span class="form-error" th:text="${error}"></span>
                     </li>
                 </ul>
             </div>
-            <button id="submit" class="btn btn-primary" type="submit">Register Food Item</button>
+            <button id="foodSubmit" class="btn btn-primary" type="submit">Register Food Item</button>
         </form>
     </section>
 </body>

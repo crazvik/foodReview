@@ -18,6 +18,7 @@ import se.ecutb.foodReview.service.ReviewerService;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -86,12 +87,14 @@ public class UserController {
     @GetMapping("admin/registerFoodItem/form")
     public String getFoodItemForm(Model model){
         model.addAttribute("form", new CreateFoodItemForm());
+        model.addAttribute("resName", restaurantRepo.findAll());
         return "registerFoodItem";
     }
 
     @GetMapping("/users/restaurantReview/form")
     public String getReviewForm(Model model) {
         model.addAttribute("form", new CreateFoodReviewForm());
+        model.addAttribute("item", foodItemRepo.findAll());
         return "restaurantReview";
     }
 
@@ -183,7 +186,7 @@ public class UserController {
 
     @PostMapping("admin/registerFoodItem/process")
     public String formRegisterFoodProcess(@Valid @ModelAttribute("form") CreateFoodItemForm form) {
-        foodItemService.register(form.getFoodItemName(), form.getDesc(), "", 0, restaurantRepo.findById(form.getRestaurantId()).get().getId());
+        foodItemService.register(form.getFoodItemName(), form.getDesc(), "", "", restaurantRepo.findByNameIgnoreCase(form.getRestaurantName()).get().getId());
         return "redirect:/admin/registerFoodItem/form";
     }
 

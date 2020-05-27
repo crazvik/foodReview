@@ -60,6 +60,25 @@
             </tr>
         </table>
         <div class="divBorder"></div>
+        <table>
+            <tr>
+                <th>Restaurant name</th>
+                <th>Food item</th>
+                <th>Food item id</th>
+                <th>Food item description</th>
+                <th>Food review</th>
+                <th>Stars</th>
+            </tr>
+            <tr th:each="foodItem, restaurant: ${foodItems}">
+                <td th:text="${foodItem.restaurant.name}"></td>
+                <td th:text="${foodItem.name}"></td>
+                <td th:text="${foodItem.id}"></td>
+                <td th:text="${foodItem.description}"></td>
+                <td th:text="${foodItem.review}"></td>
+                <td th:text="${foodItem.stars}"></td>
+            </tr>
+        </table>
+        <div class="divBorder"></div>
     </section>
 </body>
 </html>

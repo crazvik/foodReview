@@ -12,7 +12,7 @@ public class FoodItem {
     private String name;
     private String description;
     private String review;
-    private int stars;
+    private String stars;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")
@@ -21,14 +21,14 @@ public class FoodItem {
     public FoodItem() {
     }
 
-    public FoodItem(String name, String description, String review, int stars) {
+    public FoodItem(String name, String description, String review, String stars) {
         this.name = name;
         this.description = description;
         this.review = review;
         this.stars = stars;
     }
 
-    public FoodItem(String name, String description, String review, int stars, Restaurant restaurant) {
+    public FoodItem(String name, String description, String review, String stars, Restaurant restaurant) {
         this.name = name;
         this.description = description;
         this.review = review;
@@ -64,11 +64,11 @@ public class FoodItem {
         this.review = review;
     }
 
-    public int getStars() {
+    public String getStars() {
         return stars;
     }
 
-    public void setStars(int stars) {
+    public void setStars(String stars) {
         this.stars = stars;
     }
 

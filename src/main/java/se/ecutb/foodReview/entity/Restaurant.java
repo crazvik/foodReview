@@ -12,6 +12,7 @@ public class Restaurant implements Serializable {
     private int restaurantId;
     private String name;
 
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "reviewer_id")
     private Reviewer reviewer;
