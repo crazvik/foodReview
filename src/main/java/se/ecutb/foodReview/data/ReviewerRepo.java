@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface ReviewerRepo extends CrudRepository<Reviewer, Integer> {
     Optional<Reviewer> findByUsernameIgnoreCase(String username);
+
+
 }

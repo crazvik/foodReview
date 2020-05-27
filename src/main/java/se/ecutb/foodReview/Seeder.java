@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import se.ecutb.foodReview.data.ReviewerRoleRepo;
 import se.ecutb.foodReview.entity.ReviewerRole;
+import se.ecutb.foodReview.service.RestaurantService;
 import se.ecutb.foodReview.service.ReviewerService;
 
 import java.time.LocalDate;
@@ -13,11 +14,13 @@ import java.time.LocalDate;
 public class Seeder implements CommandLineRunner {
     private ReviewerService reviewerService;
     private ReviewerRoleRepo roleRepo;
+    private RestaurantService restaurantService;
 
     @Autowired
-    public Seeder(ReviewerService reviewerService, ReviewerRoleRepo roleRepo) {
+    public Seeder(ReviewerService reviewerService, ReviewerRoleRepo roleRepo, RestaurantService restaurantService) {
         this.reviewerService = reviewerService;
         this.roleRepo = roleRepo;
+        this.restaurantService = restaurantService;
     }
 
     @Override
@@ -27,5 +30,8 @@ public class Seeder implements CommandLineRunner {
 
         reviewerService.registerReviewer("Admin", "Adminson", "Admin", "admin", LocalDate.now(), true);
         reviewerService.registerReviewer("User", "Userson", "User", "user", LocalDate.now(), false);
+
+        restaurantService.registerRestaurant("First");
+        restaurantService.registerRestaurant("Second");
     }
 }

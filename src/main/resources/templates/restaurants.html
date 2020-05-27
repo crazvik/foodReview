@@ -9,13 +9,16 @@
 <body>
     <nav>
         <ul id="linkList">
-            <li><a href="index.html" th:href="@{index}">Index</a></li>
+            <li><a href="index.html" th:href="@{/index}">Index</a></li>
             <li><a href="restaurants.html" th:href="@{/restaurants}">Restaurants</a></li>
             <li sec:authorize="hasAuthority('ADMIN')">
                 <a th:href="@{/users/register/form}" href="register.html">Register user</a></li>
             <li sec:authorize="hasAuthority('ADMIN')">
-                <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a>
-            </li>
+                <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a></li>
+            <li sec:authorize="hasAuthority('ADMIN')">
+                <a th:href="@{/admin/registerFoodItem/form}" href="registerFoodItem.html">Register food items</a></li>
+            <li sec:authorize="hasAuthority('USER')">
+                <a th:href="@{/users/restaurantReview/form}" href="restaurantReview.html">Review restaurants</a></li>
         </ul>
 
         <form th:action="@{/logout}" action="#" class="form-inline" method="post">
@@ -33,14 +36,30 @@
             <tr>
                 <th>Restaurant name</th>
                 <th>Restaurant id</th>
-                <th>Restaurant reviewer</th>
             </tr>
             <tr th:each="restaurant: ${restaurants}">
                 <td th:text="${restaurant.name}"></td>
                 <td th:text="${restaurant.id}"></td>
-                <td th:text="${restaurant.reviewer}"></td>
             </tr>
         </table>
+        <div class="divBorder"></div>
+        <table>
+            <tr>
+                <th>Restaurant name</th>
+                <th>Restaurant id</th>
+                <th>Food item</th>
+                <th>Food item id</th>
+                <th>Food item description</th>
+            </tr>
+            <tr th:each="foodItem, restaurant: ${foodItems}">
+                <td th:text="${foodItem.restaurant.name}"></td>
+                <td th:text="${foodItem.restaurant.id}"></td>
+                <td th:text="${foodItem.name}"></td>
+                <td th:text="${foodItem.id}"></td>
+                <td th:text="${foodItem.description}"></td>
+            </tr>
+        </table>
+        <div class="divBorder"></div>
     </section>
 </body>
 </html>

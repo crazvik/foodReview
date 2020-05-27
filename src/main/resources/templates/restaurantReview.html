@@ -9,13 +9,14 @@
     <body>
         <nav>
             <ul id="linkList">
-                <li><a href="index.html" th:href="@{index}">Index</a></li>
+                <li><a href="index.html" th:href="@{/index}">Index</a></li>
                 <li><a href="restaurants.html" th:href="@{/restaurants}">Restaurants</a></li>
                 <li sec:authorize="hasAuthority('ADMIN')">
                     <a th:href="@{/users/register/form}" href="register.html">Register user</a></li>
-                <li sec:authorize="hasAuthority('USER')">
-                    <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a>
-                </li>
+                <li sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a></li>
+                <li sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/admin/registerFoodItem/form}" href="registerFoodItem.html">Register food items</a></li>
                 <li sec:authorize="hasAuthority('USER')">
                     <a th:href="@{/users/restaurantReview/form}" href="restaurantReview.html">Review restaurants</a></li>
             </ul>
@@ -29,7 +30,13 @@
                 </div>
             </form>
         </nav>
-        <section class="main-window"><h1>Review page</h1>
+        <section class="main-window">
+            <h1>Review page</h1>
+            <form th:action="@{/users/restaurantReview/process}" th:object="${form}" method="post">
+                <textarea class="form-control" id="review" th:field="*{review}" placeholder="Review" cols="75"></textarea>
+
+                <button id="submit" class="btn btn-primary" type="submit">Register</button>
+            </form>
 
         </section>
     </body>

@@ -7,15 +7,18 @@
     <title>Register</title>
 </head>
 <body>
-    <ul id="linkList">
-        <li><a href="index.html" th:href="@{/index}">Index</a></li>
-        <li><a href="restaurants.html" th:href="@{restaurants}">Restaurants</a></li>
-        <li sec:authorize="hasAuthority('ADMIN')">
-            <a th:href="@{/users/register/form}" href="register.html">Register user</a></li>
-        <li sec:authorize="hasAuthority('ADMIN')">
-            <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a>
-        </li>
-    </ul>
+<ul id="linkList">
+    <li><a href="index.html" th:href="@{/index}">Index</a></li>
+    <li><a href="restaurants.html" th:href="@{/restaurants}">Restaurants</a></li>
+    <li sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/users/register/form}" href="register.html">Register user</a></li>
+    <li sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a></li>
+    <li sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/admin/registerFoodItem/form}" href="registerFoodItem.html">Register food items</a></li>
+    <li sec:authorize="hasAuthority('USER')">
+        <a th:href="@{/users/restaurantReview/form}" href="restaurantReview.html">Review restaurants</a></li>
+</ul>
     <form th:action="@{/logout}" action="#" class="form-inline" method="post">
         <div sec:authorize="isAuthenticated()">
             <button class="btn btn-outline-info" type="submit" value="Logout" id="logoutButton">Logout</button>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" th:href="@{/styles/style.css}" href="styles/style.css">
+    <meta charset="UTF-8">
+    <title>Register food item</title>
+</head>
+<body>
+    <ul id="linkList">
+        <li><a href="index.html" th:href="@{/index}">Index</a></li>
+        <li><a href="restaurants.html" th:href="@{/restaurants}">Restaurants</a></li>
+        <li sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/users/register/form}" href="register.html">Register user</a></li>
+        <li sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a></li>
+        <li sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/admin/registerFoodItem/form}" href="registerFoodItem.html">Register food items</a></li>
+        <li sec:authorize="hasAuthority('USER')">
+            <a th:href="@{/users/restaurantReview/form}" href="restaurantReview.html">Review restaurants</a></li>
+    </ul>
+    <form th:action="@{/logout}" action="#" class="form-inline" method="post">
+        <div sec:authorize="isAuthenticated()">
+            <button class="btn btn-outline-info" type="submit" value="Logout" id="logoutButton">Logout</button>
+        </div>
+        <div sec:authorize="isAnonymous()">
+            <a class="btn btn-success" th:href="@{/login}" value="Login" id="loginButton">Login/Register</a>
+        </div>
+    </form>
+
+    <section class="main-window">
+        <h1>Register</h1>
+        <form th:action="@{/admin/registerFoodItem/process}" th:object="${form}" method="post">
+            <label for="foodItems"></label>
+            <input class="form-control" type="text" id="foodItems" th:field="*{foodItemName}" placeholder="Food item name"/>
+            <div th:if="${#fields.hasErrors('foodItemName')}">
+                <ul class="p-0">
+                    <li th:each="error : ${#fields.errors('foodItemName')}">
+                        <span class="form-error" th:text="${error}"></span>
+                    </li>
+                </ul>
+            </div>
+            <input class="form-control" type="text" id="foodItemDesc" th:field="*{desc}" placeholder="Food item description"/>
+            <div th:if="${#fields.hasErrors('desc')}">
+                <ul class="p-0">
+                    <li th:each="error : ${#fields.errors('desc')}">
+                        <span class="form-error" th:text="${error}"></span>
+                    </li>
+                </ul>
+            </div>
+            <input class="form-control" type="text" id="restaurantId" th:field="*{restaurantId}" placeholder="Restaurant id"/>
+            <div th:if="${#fields.hasErrors('restaurantId')}">
+                <ul class="p-0">
+                    <li th:each="error : ${#fields.errors('restaurantId')}">
+                        <span class="form-error" th:text="${error}"></span>
+                    </li>
+                </ul>
+            </div>
+            <button id="submit" class="btn btn-primary" type="submit">Register Food Item</button>
+        </form>
+    </section>
+</body>
+</html>

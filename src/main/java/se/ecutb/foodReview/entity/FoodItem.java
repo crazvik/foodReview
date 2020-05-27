@@ -12,6 +12,7 @@ public class FoodItem {
     private String name;
     private String description;
     private String review;
+    private int stars;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")
@@ -20,10 +21,19 @@ public class FoodItem {
     public FoodItem() {
     }
 
-    public FoodItem(String name, String description, String review) {
+    public FoodItem(String name, String description, String review, int stars) {
         this.name = name;
         this.description = description;
         this.review = review;
+        this.stars = stars;
+    }
+
+    public FoodItem(String name, String description, String review, int stars, Restaurant restaurant) {
+        this.name = name;
+        this.description = description;
+        this.review = review;
+        this.stars = stars;
+        this.restaurant = restaurant;
     }
 
     public int getId() {
@@ -54,6 +64,14 @@ public class FoodItem {
         this.review = review;
     }
 
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
+    }
+
     public Restaurant getRestaurant() {
         return restaurant;
     }
@@ -68,6 +86,7 @@ public class FoodItem {
         if (o == null || getClass() != o.getClass()) return false;
         FoodItem foodItem = (FoodItem) o;
         return itemId == foodItem.itemId &&
+                stars == foodItem.stars &&
                 Objects.equals(name, foodItem.name) &&
                 Objects.equals(description, foodItem.description) &&
                 Objects.equals(review, foodItem.review) &&
@@ -76,7 +95,7 @@ public class FoodItem {
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, name, description, review, restaurant);
+        return Objects.hash(itemId, name, description, review, stars, restaurant);
     }
 
     @Override
@@ -86,6 +105,7 @@ public class FoodItem {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", review='" + review + '\'' +
+                ", stars=" + stars +
                 ", restaurant=" + restaurant +
                 '}';
     }

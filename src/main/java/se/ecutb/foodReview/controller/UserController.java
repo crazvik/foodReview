@@ -6,20 +6,21 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import se.ecutb.foodReview.data.FoodItemRepo;
 import se.ecutb.foodReview.data.RestaurantRepo;
 import se.ecutb.foodReview.data.ReviewerRepo;
+import se.ecutb.foodReview.dto.CreateFoodItemForm;
 import se.ecutb.foodReview.dto.CreateRestaurantForm;
 import se.ecutb.foodReview.dto.CreateReviewerForm;
-import se.ecutb.foodReview.entity.Restaurant;
+import se.ecutb.foodReview.dto.UpdateReviewerForm;
 import se.ecutb.foodReview.entity.Reviewer;
+import se.ecutb.foodReview.service.FoodItemService;
 import se.ecutb.foodReview.service.RestaurantService;
 import se.ecutb.foodReview.service.ReviewerService;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -27,13 +28,18 @@ public class UserController {
     private ReviewerService reviewerService;
     private RestaurantRepo restaurantRepo;
     private RestaurantService restaurantService;
+    private FoodItemRepo foodItemRepo;
+    private FoodItemService foodItemService;
 
     @Autowired
-    public UserController(ReviewerRepo reviewerRepo, ReviewerService reviewerService, RestaurantRepo restaurantRepo, RestaurantService restaurantService) {
+    public UserController(ReviewerRepo reviewerRepo, ReviewerService reviewerService, RestaurantRepo restaurantRepo,
+                          RestaurantService restaurantService, FoodItemRepo foodItemRepo, FoodItemService foodItemService) {
         this.reviewerRepo = reviewerRepo;
         this.reviewerService = reviewerService;
         this.restaurantRepo = restaurantRepo;
         this.restaurantService = restaurantService;
+        this.foodItemRepo = foodItemRepo;
+        this.foodItemService = foodItemService;
     }
 
     @GetMapping("users/register/form")
@@ -68,13 +74,59 @@ public class UserController {
         }
     }
 
-    @GetMapping("users/registerRestaurant/form")
+    @GetMapping("users/{id}")
+    public String getUserView(@PathVariable(name = "id") int id, Model model) {
+        Reviewer reviewer = reviewerRepo.findById(id).orElseThrow(IllegalArgumentException::new);
+        model.addAttribute("user", reviewer);
+        return "userPage";
+    }
+
+    @GetMapping("users/{id}/update")
+    public String getUpdateForm(@PathVariable(name = "id") int id, Model model) {
+        UpdateReviewerForm reviewerForm = new UpdateReviewerForm();
+        Reviewer reviewer = reviewerRepo.findById(id).orElseThrow(IllegalArgumentException::new);
+        reviewerForm.setFirstName(reviewer.getFirstName());
+        reviewerForm.setLastName(reviewer.getLastName());
+        reviewerForm.setUsername(reviewer.getUsername());
+        reviewerForm.setId(reviewer.getId());
+        model.addAttribute("form", reviewerForm);
+        return "updateReviewer";
+    }
+
+    @PostMapping("users/{id}/update")
+    public String processUpdate(
+            @PathVariable("id") int id,
+            @Valid @ModelAttribute("form") UpdateReviewerForm form,
+            BindingResult result)
+    {
+        Reviewer original = reviewerRepo.findById(id).orElseThrow(IllegalArgumentException::new);
+        Optional<Reviewer> optional = reviewerRepo.findByUsernameIgnoreCase(form.getUsername());
+        if(optional.isPresent() && !form.getUsername().equalsIgnoreCase(original.getUsername())){
+            FieldError error = new FieldError("form", "username", "Username is already in use");
+            result.addError(error);
+        }
+
+        if(result.hasErrors()){
+            return "updateReviewer";
+        }
+
+
+        original.setUsername(form.getUsername());
+        original.setFirstName(form.getFirstName());
+        original.setLastName(form.getLastName());
+
+        reviewerRepo.save(original);
+
+        return "redirect:/users/"+original.getId();
+    }
+
+    @GetMapping("admin/registerRestaurant/form")
     public String getRestaurantForm(Model model){
         model.addAttribute("form", new CreateRestaurantForm());
         return "registerRestaurant";
     }
 
-    @PostMapping("users/registerRestaurant/process")
+    @PostMapping("admin/registerRestaurant/process")
     public String formProcess(@Valid @ModelAttribute("form") CreateRestaurantForm form, BindingResult bindingResult) {
         if (restaurantRepo.findByNameIgnoreCase(form.getRestaurantName()).isPresent()) {
             FieldError error = new FieldError("form", "name", "Name is already in use");
@@ -86,7 +138,19 @@ public class UserController {
         }
 
         restaurantService.registerRestaurant(form.getRestaurantName());
-        return "redirect:/users/registerRestaurant/form";
+        return "redirect:/admin/registerRestaurant/form";
+    }
+
+    @GetMapping("admin/registerFoodItem/form")
+    public String getFoodItemForm(Model model){
+        model.addAttribute("form", new CreateFoodItemForm());
+        return "registerFoodItem";
+    }
+
+    @PostMapping("admin/registerFoodItem/process")
+    public String formProcess(@Valid @ModelAttribute("form") CreateFoodItemForm form) {
+        foodItemService.register(form.getFoodItemName(), form.getDesc(), "", 0, restaurantRepo.findById(form.getRestaurantId()).get().getId());
+        return "redirect:/admin/registerFoodItem/form";
     }
 
     @GetMapping("/login")
@@ -97,11 +161,19 @@ public class UserController {
     @GetMapping("/restaurants")
     public String getRestaurantPage(Model model) {
         model.addAttribute("restaurants", restaurantRepo.findAll());
+        model.addAttribute("foodItems", foodItemRepo.findAll());
         return "restaurants";
     }
 
     @GetMapping("/users/restaurantReview/form")
-    public String getRestaurantReviewPage() {
+    public String getRestaurantReviewPage(Model model) {
+        model.addAttribute("form", new CreateRestaurantForm());
         return "restaurantReview";
+    }
+
+    @PostMapping("users/restaurantReview/process")
+    public String formReview(@Valid @ModelAttribute("form") CreateRestaurantForm form) {
+        restaurantRepo.findByNameIgnoreCase(form.getRestaurantName()).get();
+        return "redirect:/users/restaurantReview/form";
     }
 }

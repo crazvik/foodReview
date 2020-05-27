@@ -10,8 +10,15 @@
 <nav>
     <ul id="linkList">
         <li><a href="index.html" th:href="@{/index}">Index</a></li>
-        <li sec:authorize="isAnonymous() || hasAuthority('ADMIN')">
-            <a th:href="@{/users/register/form}" href="register.html">Register</a></li>
+        <li><a href="restaurants.html" th:href="@{/restaurants}">Restaurants</a></li>
+        <li sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/users/register/form}" href="register.html">Register user</a></li>
+        <li sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a></li>
+        <li sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/admin/registerFoodItem/form}" href="registerFoodItem.html">Register food items</a></li>
+        <li sec:authorize="hasAuthority('USER')">
+            <a th:href="@{/users/restaurantReview/form}" href="restaurantReview.html">Review restaurants</a></li>
     </ul>
     <div sec:authorize="isAnonymous()">
         <a id="loginButton" class="btn btn-success" th:href="@{/login}" value="Login">Login/Register</a>
@@ -24,6 +31,7 @@
         <input name="password" type="password" placeholder="Password">
         <button id="submit" class="btn btn-primary" type="submit">Login</button>
     </form>
+    <div class="divBorder"></div>
     <div id="register">
         <a th:href="@{/users/register/form}" href="register.html">Not a user?</a>
     </div>

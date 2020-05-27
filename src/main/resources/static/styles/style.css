@@ -89,7 +89,6 @@ li>a {
 
 form {
     text-align: center;
-    margin-top: -75px;
 }
 
 input {
@@ -155,4 +154,25 @@ td, th {
 
 tr:nth-child(even) {
     background-color: #dddddd;
+}
+
+.divBorder {
+    border-bottom: gray solid 1px;
+    width: 80%;
+    margin: 60px auto 10px;
+    position: relative;
+    bottom: 25px;
+}
+
+#review {
+    height: 100px;
+    overflow: hidden;
+    display: block;
+    margin: auto;
+    padding: 10px;
+}
+
+.container {
+    text-align: center;
+    font-size: 20px;
 }

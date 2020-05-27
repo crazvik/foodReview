@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" th:href="@{/styles/style.css}" href="styles/style.css">
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<ul id="linkList">
+    <li><a href="index.html" th:href="@{/index}">Index</a></li>
+    <li><a href="restaurants.html" th:href="@{/restaurants}">Restaurants</a></li>
+    <li sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/users/register/form}" href="register.html">Register user</a></li>
+    <li sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/admin/registerRestaurant/form}" href="registerRestaurant.html">Register restaurants</a></li>
+    <li sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/admin/registerFoodItem/form}" href="registerFoodItem.html">Register food items</a></li>
+    <li sec:authorize="hasAuthority('USER')">
+        <a th:href="@{/users/restaurantReview/form}" href="restaurantReview.html">Review restaurants</a></li>
+</ul>
+<form th:action="@{/logout}" action="#" class="form-inline" method="post">
+    <div sec:authorize="isAuthenticated()">
+        <button class="btn btn-outline-info" type="submit" value="Logout" id="logoutButton">Logout</button>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <a class="btn btn-success" th:href="@{/login}" value="Login" id="loginButton">Login/Register</a>
+    </div>
+</form>
+<section class="main-window">
+    <h1>User</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-1">
+                <span>Name:</span>
+                <span th:text="${user.firstName+' '+user.lastName}"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <span>Username:</span>
+                <span th:text="${user.username}"></span>
+            </div>
+            <div class="col-1">
+                <span>Registered:</span>
+                <span th:text="${user.registrationDate}"></span>
+            </div>
+        </div>
+        <a class="btn btn-link" th:href="@{/users/{id}/update (id=${user.id})}">Update</a>
+    </div>
+</section>
+</body>
+</html>
