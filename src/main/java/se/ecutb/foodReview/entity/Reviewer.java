@@ -18,9 +18,6 @@ public class Reviewer {
     private String password;
     private LocalDate registrationDate;
 
-    @OneToMany(mappedBy = "reviewer")
-    private List<Restaurant> restaurants;
-
     @ManyToMany(
             cascade = {CascadeType.MERGE},
             fetch = FetchType.EAGER
@@ -87,14 +84,6 @@ public class Reviewer {
         this.registrationDate = registrationDate;
     }
 
-    public List<Restaurant> getRestaurants() {
-        return restaurants;
-    }
-
-    public void setRestaurants(List<Restaurant> restaurants) {
-        this.restaurants = restaurants;
-    }
-
     public List<ReviewerRole> getRoles() {
         return roles;
     }
@@ -114,13 +103,12 @@ public class Reviewer {
                 Objects.equals(username, reviewer.username) &&
                 Objects.equals(password, reviewer.password) &&
                 Objects.equals(registrationDate, reviewer.registrationDate) &&
-                Objects.equals(restaurants, reviewer.restaurants) &&
                 Objects.equals(roles, reviewer.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reviewerId, firstName, lastName, username, password, registrationDate, restaurants, roles);
+        return Objects.hash(reviewerId, firstName, lastName, username, password, registrationDate, roles);
     }
 
     @Override
@@ -132,7 +120,6 @@ public class Reviewer {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", registrationDate=" + registrationDate +
-                ", restaurants=" + restaurants +
                 ", roles=" + roles +
                 '}';
     }

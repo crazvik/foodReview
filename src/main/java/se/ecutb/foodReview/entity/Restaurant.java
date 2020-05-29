@@ -12,11 +12,6 @@ public class Restaurant implements Serializable {
     private int restaurantId;
     private String name;
 
-    @SuppressWarnings("JpaDataSourceORMInspection")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "reviewer_id")
-    private Reviewer reviewer;
-
     @OneToMany(mappedBy = "restaurant")
     private List<FoodItem> foodItems;
 
@@ -39,14 +34,6 @@ public class Restaurant implements Serializable {
         this.name = name;
     }
 
-    public Reviewer getReviewer() {
-        return reviewer;
-    }
-
-    public void setReviewer(Reviewer reviewer) {
-        this.reviewer = reviewer;
-    }
-
     public List<FoodItem> getFoodItems() {
         return foodItems;
     }
@@ -62,13 +49,12 @@ public class Restaurant implements Serializable {
         Restaurant that = (Restaurant) o;
         return restaurantId == that.restaurantId &&
                 Objects.equals(name, that.name) &&
-                Objects.equals(reviewer, that.reviewer) &&
                 Objects.equals(foodItems, that.foodItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(restaurantId, name, reviewer, foodItems);
+        return Objects.hash(restaurantId, name, foodItems);
     }
 
     @Override
@@ -76,7 +62,6 @@ public class Restaurant implements Serializable {
         return "Restaurant{" +
                 "restaurantId=" + restaurantId +
                 ", name='" + name + '\'' +
-                ", reviewer=" + reviewer +
                 ", foodItems=" + foodItems +
                 '}';
     }
